@@ -3,8 +3,7 @@ import { View, Image, StyleSheet, SafeAreaView } from 'react-native';
 import { Icon, Button } from 'native-base';
 import { Platform } from 'react-native';
 
-const Header = ({ onMenuButtonPress, onCameraButtonPress }) => {
-  
+const Header = () => {
   return (
     <SafeAreaView style={styles.container}>
       <Image source={require('../../img/logo.png')} style={styles.logo} />
