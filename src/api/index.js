@@ -1,7 +1,10 @@
+import Analytics from "../services/analytics";
+
 export default {
   addImage: (image) => {
     return new Promise((resolve, reject) => {
       setTimeout(()=>{
+        Analytics.
         resolve('https://cdn.pixabay.com/photo/2017/04/25/00/36/street-dancer-2258281_960_720.jpg');
       }, 3000)
     })

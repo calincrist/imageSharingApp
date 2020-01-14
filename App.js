@@ -17,14 +17,18 @@ import thunk from 'redux-thunk';
 import { Icon } from 'native-base';
 import imagesReducer from './src/reducers/images';
 
-import ImagesList from './src/screens/ImagesList.js';
-import MyImages from './src/screens/MyImages.js';
-import Camera from './src/screens/Camera.js';
+import ImagesList from './src/screens/ImagesList';
+import MyImages from './src/screens/MyImages';
+import Camera from './src/screens/Camera';
+import Login from './src/screens/Login';
+
+import Analytics from './src/services/analytics';
 
 const Navigator = createBottomTabNavigator({
   ImagesList: { screen: ImagesList },
   MyImages: { screen: MyImages },
-  Camera: { screen: Camera }
+  Camera: { screen: Camera },
+  Login: { screen: Login }
 }, {
   defaultNavigationOptions: ({ navigation }) => ({
     tabBarIcon: ({ focused, horizontal, tintColor }) => {
@@ -50,16 +54,33 @@ let store = createStore(combineReducers({ imagesReducer }), applyMiddleware(thun
 
 const AppContainer = createAppContainer(Navigator);
 
-export default class App extends React.Component {
-  constructor() {
-    super();
-  }
+const App = () => {
+  const getActiveRouteName = navigationState => {
+    if (!navigationState) {
+      return null;
+    }
+    const route = navigationState.routes[navigationState.index];
+    // dive into nested navigators
+    if (route.routes) {
+      return getActiveRouteName(route);
+    }
+    return route.routeName;
+  };
 
-  render() {
-    return (
-      <Provider store={store}>
-        <AppContainer/>
-      </Provider>
-    )
-  }
+  return (
+    <Provider store={store}>
+      <AppContainer
+        onNavigationStateChange={(prevState, currentState, action) => {
+          const currentRouteName = getActiveRouteName(currentState);
+          const previousRouteName = getActiveRouteName(prevState);
+
+          if (previousRouteName !== currentRouteName) {
+            Analytics.setCurrentScreen(currentRouteName);
+          }
+        }}
+      />
+    </Provider>
+  )
 }
+
+export default App;

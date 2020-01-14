@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "466027909954",
+    "firebase_url": "https://tutorial-demo-41037.firebaseio.com",
+    "project_id": "tutorial-demo-41037",
+    "storage_bucket": "tutorial-demo-41037.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:466027909954:android:3c21abac884819eff9eedb",
+        "android_client_info": {
+          "package_name": "com.calincrist.imagesharing"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "466027909954-g23mmt0prn06irnkdnrmj9o8v8sr8fd9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLQcfWFbx14RapMsbgFsVAlPkFBDcUuwY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "466027909954-g23mmt0prn06irnkdnrmj9o8v8sr8fd9.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "466027909954-57ul6l4f62amcbnta3fttfho8pi3nr7l.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.calincrist.ImageSharing"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
