@@ -14,6 +14,7 @@ class Analytics {
     await Promise.all([
       analytics().setUserId(id),
       analytics().setUserProperty('email', email),
+      this.logEvent("sign_in")
     ]);
   };
 
@@ -23,15 +24,15 @@ class Analytics {
       analytics().setUserId(id),
       analytics().setUserProperty('email', email),
       analytics().setUserProperty('created_at', new Date()),
+      this.logEvent("sign_up")
     ]);
   };
 
   static setCurrentScreen = async screenName => {
-    console.log('setting', screenName);
     await analytics().setCurrentScreen(screenName, screenName);
   };
 
-  static logEvent = async (eventName, propertyObject) => {
+  static logEvent = async (eventName, propertyObject = {}) => {
     await analytics().logEvent(eventName, propertyObject);
   }
 

@@ -2,61 +2,58 @@ import React, { Component, useState } from 'react';
 import {
   StyleSheet,
   Text,
-  View,
-  TextInput,
   TouchableHighlight,
   Image,
   Alert
 } from 'react-native';
+import { Input, Container, Item } from 'native-base';
+
 import Analytics from '../services/analytics';
+import { useNavigation } from 'react-navigation-hooks';
 
 const Login = () => {
 
-  const [email, setEmail] = useState('');
+  const { navigate } = useNavigation();
+
+  const [email, setEmail] = useState('a@b.com');
   const [password, setPassword] = useState('')
 
-  const onClickListener = async (viewId) => {
-    Alert.alert("Alert", "Button pressed "+viewId);
-    await Analytics.onSignIn({id: 1, email})
+  const loginAction = async () => {
+
+    //  validate inputs...
+    //  api call for signing in...
+
+    navigate('SignedIn');
+    await Analytics.onSignIn({ id: "1", email })
   }
 
   
   return (
-    <View style={styles.container}>
-      <View style={styles.inputContainer}>
-        {/* <Image style={styles.inputIcon} source={{uri: 'https://png.icons8.com/message/ultraviolet/50/3498db'}}/> */}
-        <TextInput 
+    <Container style={styles.container}>
+  
+      <Image source={require('../../img/logo.png')} style={styles.logo} />
+      <Item style={styles.inputContainer} underline>
+        <Input 
           value={email}
-          style={styles.inputs}
+          
           placeholder="Email"
           keyboardType="email-address"
-          underlineColorAndroid='transparent'
           onChangeText={(email) => setEmail(email)}/>
-      </View>
+      </Item>
       
-      <View style={styles.inputContainer}>
-        {/* <Image style={styles.inputIcon} source={{uri: 'https://png.icons8.com/key-2/ultraviolet/50/3498db'}}/> */}
-        <TextInput 
+      <Item style={styles.inputContainer}>
+        <Input 
           value={password}
-          style={styles.inputs}
           placeholder="Password"
           secureTextEntry={true}
-          underlineColorAndroid='transparent'
           onChangeText={(password) => setPassword(password)}/>
-      </View>
+      </Item>
 
-      <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={() => onClickListener('login')}>
+      <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={loginAction}>
         <Text style={styles.loginText}>Login</Text>
       </TouchableHighlight>
-
-      <TouchableHighlight style={styles.buttonContainer} onPress={() => onClickListener('restore_password')}>
-          <Text>Forgot your password?</Text>
-      </TouchableHighlight>
-
-      <TouchableHighlight style={styles.buttonContainer} onPress={() => onClickListener('register')}>
-          <Text>Register</Text>
-      </TouchableHighlight>
-    </View>
+      
+    </Container>
   );
 
 }
@@ -69,15 +66,16 @@ const styles = StyleSheet.create({
     // backgroundColor: '#DCDCDC',
   },
   inputContainer: {
-    borderColor: '#F5FCFF',
     backgroundColor: '#FFFFFF',
-    borderRadius:30,
-    borderWidth: 2,
     width:250,
     height:45,
     marginBottom:20,
     flexDirection: 'row',
     alignItems:'center'
+  },
+  logo: {
+    resizeMode: 'contain',
+    margin: 10
   },
   inputs:{
     height:45,

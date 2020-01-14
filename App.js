@@ -8,7 +8,7 @@
 
 import React from 'react';
 import { Platform } from 'react-native';
-import { createAppContainer } from 'react-navigation';
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 
 import { Provider } from 'react-redux';
@@ -28,7 +28,6 @@ const Navigator = createBottomTabNavigator({
   ImagesList: { screen: ImagesList },
   MyImages: { screen: MyImages },
   Camera: { screen: Camera },
-  Login: { screen: Login }
 }, {
   defaultNavigationOptions: ({ navigation }) => ({
     tabBarIcon: ({ focused, horizontal, tintColor }) => {
@@ -50,9 +49,23 @@ const Navigator = createBottomTabNavigator({
   }
 });
 
+const SwitchNavigator = createSwitchNavigator(
+  {
+    SignedIn: {
+      screen: Navigator,
+    },
+    SignedOut: {
+      screen: Login,
+    },
+  },
+  {
+    initialRouteName: 'SignedOut',
+  },
+);
+
 let store = createStore(combineReducers({ imagesReducer }), applyMiddleware(thunk));
 
-const AppContainer = createAppContainer(Navigator);
+const AppContainer = createAppContainer(SwitchNavigator);
 
 const App = () => {
   const getActiveRouteName = navigationState => {

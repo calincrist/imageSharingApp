@@ -1,12 +1,21 @@
 import React from 'react';
 import { List, ListItem, Text, Icon, Button, Container, Content } from 'native-base';
 import { Image, Dimensions, View, Share, ActivityIndicator, StyleSheet } from 'react-native';
+import Analytics from '../services/analytics';
 
 var {height, width} = Dimensions.get('window');
 
 const Gallery = ({ imageList, loading }) => {
-  const share = (image) => {
-    Share.share({message: image.src, title: 'Image from: ' + image.user.name}) 
+  const share = async (image) => {
+    const result = await Share.share({message: image.src, title: 'Image from: ' + image.user.name});
+    
+    if (result.action === Share.sharedAction) {
+      Analytics.logEvent("share", {
+        type: result.activityType
+      });
+    } else if (result.action === Share.dismissedAction) {
+      // dismissed
+    }
   }
 
   return (

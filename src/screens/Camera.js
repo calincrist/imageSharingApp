@@ -12,6 +12,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { useNavigation } from 'react-navigation-hooks';
 import * as Actions from '../actions';
+import Analytics from '../services/analytics';
 
 const CameraScreen = ({ addImage }) => {
 
@@ -23,6 +24,12 @@ const CameraScreen = ({ addImage }) => {
       const data = await this.camera.takePictureAsync({metadata: options});
       console.log(data.uri);
       await addImage(data);
+
+      Analytics.logEvent("add_image", {
+        "take_picture": true,
+        "camera_roll": false
+      });
+
       navigate('ImagesList');
     }
   }
